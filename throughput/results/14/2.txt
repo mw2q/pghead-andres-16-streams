@@ -1,0 +1,152 @@
+BEGIN;
+BEGIN
+select
+	s_acctbal,
+	s_name,
+	n_name,
+	p_partkey,
+	p_mfgr,
+	s_address,
+	s_phone,
+	s_comment
+from
+	part,
+	supplier,
+	partsupp,
+	nation,
+	region
+where
+	p_partkey = ps_partkey
+	and s_suppkey = ps_suppkey
+	and p_size = 32
+	and p_type like '%BRASS'
+	and s_nationkey = n_nationkey
+	and n_regionkey = r_regionkey
+	and r_name = 'EUROPE'
+	and ps_supplycost = (
+		select
+			min(ps_supplycost)
+		from
+			partsupp,
+			supplier,
+			nation,
+			region
+		where
+			p_partkey = ps_partkey
+			and s_suppkey = ps_suppkey
+			and s_nationkey = n_nationkey
+			and n_regionkey = r_regionkey
+			and r_name = 'EUROPE'
+	)
+order by
+	s_acctbal desc,
+	n_name,
+	s_name,
+	p_partkey
+LIMIT 100;
+ s_acctbal |          s_name           |          n_name           | p_partkey |          p_mfgr           |                s_address                 |     s_phone     |                                              s_comment                                              
+-----------+---------------------------+---------------------------+-----------+---------------------------+------------------------------------------+-----------------+-----------------------------------------------------------------------------------------------------
+   9999.66 | Supplier#000043638        | RUSSIA                    |    618631 | Manufacturer#1            | pRnD Nz9fBDFin                           | 32-383-297-3784 | rts wake regularly against the quickly silent deposits. slyly
+   9993.02 | Supplier#000070471        | ROMANIA                   |   1795419 | Manufacturer#5            | xVoX7PUFN3S7LwKI                         | 29-753-606-7909 | ial, regular instructions. regul
+   9990.03 | Supplier#000081720        | UNITED KINGDOM            |   1331693 | Manufacturer#2            | 9p,sDTmwbliPlu0EwiOvXHT1maCt             | 33-166-373-3036 |  unwind fluffily about the bold pinto beans. silent packages are acco
+   9974.93 | Supplier#000072260        | ROMANIA                   |    572259 | Manufacturer#5            | ijrpECIzgkK,qi83qjKtf0qhMX4O3i17i        | 29-745-482-4154 | its above the special deposits engage slyly among the unusual, even asymptotes. carefull
+   9974.93 | Supplier#000072260        | ROMANIA                   |   1472259 | Manufacturer#3            | ijrpECIzgkK,qi83qjKtf0qhMX4O3i17i        | 29-745-482-4154 | its above the special deposits engage slyly among the unusual, even asymptotes. carefull
+   9972.87 | Supplier#000093741        | RUSSIA                    |   1418698 | Manufacturer#2            | zn9C25C2dR                               | 32-635-171-3010 | lithely final foxes. permanent deposits wake express dolphins. blithely 
+   9972.01 | Supplier#000058932        | GERMANY                   |   1008911 | Manufacturer#1            | M7rE4Onghqo                              | 17-281-140-3820 | egular packages detect blithely about the furiously final theodolites. furiously unusual requests h
+   9968.96 | Supplier#000085431        | ROMANIA                   |   1160419 | Manufacturer#4            | 1hhUdxO7AVH                              | 29-402-887-2528 |  boost furiously blithely quiet requests. ironic, ironic instructions haggle slowly. ironic, un
+   9967.75 | Supplier#000072507        | ROMANIA                   |   1397467 | Manufacturer#4            | zz0KOSvPVYgwqLxIba0MFS6Nw R0             | 29-513-452-1041 | s. regular, final theodolites after the
+   9967.75 | Supplier#000072507        | ROMANIA                   |   1797455 | Manufacturer#3            | zz0KOSvPVYgwqLxIba0MFS6Nw R0             | 29-513-452-1041 | s. regular, final theodolites after the
+   9967.64 | Supplier#000037131        | UNITED KINGDOM            |   1212118 | Manufacturer#4            | Xkxv7lxYDBNtVOegdvZyeEfQ70AdvKQYHBIh0    | 33-957-450-3258 | boost slyly. slyly regular requests a
+    9967.6 | Supplier#000028837        | ROMANIA                   |   1903817 | Manufacturer#3            | gAaNbDxVTyFjjhgGodAKyy9uk                | 29-105-576-2294 | hins must have to haggle blithely along
+   9967.45 | Supplier#000002302        | FRANCE                    |    227295 | Manufacturer#5            | wMEzrsX2KKpTaJGE3uGEUibymG               | 16-486-165-5642 | gly carefully bold deposits. accounts nag b
+   9961.82 | Supplier#000082261        | FRANCE                    |   1157249 | Manufacturer#2            | uFMabU,5TVf7d                            | 16-966-882-3062 | y ironic theodolites are fluffily slyly bold escapades. express
+   9961.34 | Supplier#000016272        | UNITED KINGDOM            |    891263 | Manufacturer#4            | MgSqMFihB5voR65MTjO9Gsu                  | 33-964-689-9063 | sts along the blithely ironic instructions detect blithely final courts. 
+   9959.58 | Supplier#000039262        | GERMANY                   |    539261 | Manufacturer#4            | bI4ANb8NRA                               | 17-652-424-9680 |  unusual excuses nag. final
+   9959.48 | Supplier#000049419        | GERMANY                   |   1249418 | Manufacturer#1            | ROk,1HFTMs 0hoLB                         | 17-357-273-3706 | ress deposits boost. pending, even foxes use carefully. packa
+   9956.67 | Supplier#000074260        | FRANCE                    |    149258 | Manufacturer#5            | W83 2W,pP8sFtnVxjOJC1a7zO5               | 16-511-538-8136 | yly ironic ideas try to are! final platelets above the final
+   9956.16 | Supplier#000018317        | ROMANIA                   |    768302 | Manufacturer#3            | En7XMRKeOxFcOAkfdY                       | 29-487-869-3993 | ctions. final packages sleep 
+   9955.05 | Supplier#000008810        | UNITED KINGDOM            |   1708809 | Manufacturer#4            | ,Ot93zDXOFSjWSKsKrT7XJ4YPCP,A            | 33-527-478-5988 | ily according to the carefully express pinto beans. unusual requests use quickly carefully s
+   9952.58 | Supplier#000069783        | ROMANIA                   |    144781 | Manufacturer#5            | kuBssY9vWqPyGNW4Y29V8mKBt15orDYl         | 29-495-557-4363 |  ironic packages sleep. en
+   9950.43 | Supplier#000033696        | UNITED KINGDOM            |    958668 | Manufacturer#1            | EQZiJnVQOVozLi49                         | 33-500-308-1801 | regular requests wake ironic, pending platelets. regular, special
+   9950.43 | Supplier#000033696        | UNITED KINGDOM            |   1383669 | Manufacturer#3            | EQZiJnVQOVozLi49                         | 33-500-308-1801 | regular requests wake ironic, pending platelets. regular, special
+   9947.22 | Supplier#000082970        | GERMANY                   |    182969 | Manufacturer#1            | dmnugre65mtZOAkDo                        | 17-871-227-1870 | y even packages about the slyly ironic excuses sublate ar
+   9947.22 | Supplier#000082970        | GERMANY                   |    782969 | Manufacturer#1            | dmnugre65mtZOAkDo                        | 17-871-227-1870 | y even packages about the slyly ironic excuses sublate ar
+   9946.04 | Supplier#000055744        | ROMANIA                   |    780722 | Manufacturer#4            | dRRSaDvg ib vCKOvhiHl                    | 29-434-996-8849 | are platelets. pending depo
+   9946.04 | Supplier#000055744        | ROMANIA                   |    855743 | Manufacturer#1            | dRRSaDvg ib vCKOvhiHl                    | 29-434-996-8849 | are platelets. pending depo
+   9945.78 | Supplier#000089047        | UNITED KINGDOM            |     64046 | Manufacturer#2            | rqoOqRo,fG2vifP6Ji,qKt5dzhz0m1P4GFVLDXl  | 33-294-204-9139 | l dependencies about the carefully ironic accounts are around the idle, unusual requests. pinto be
+   9942.35 | Supplier#000018266        | UNITED KINGDOM            |    818265 | Manufacturer#2            | kR51lIyRBhgThYMEh8yjMafGCFkhsbMQ59IbLEsJ | 33-209-721-5199 | g, ironic deposits are slyly be
+   9941.59 | Supplier#000048871        | RUSSIA                    |    923861 | Manufacturer#2            | Smsew21PTLWhTznH6CgfQDb                  | 32-429-129-9835 | ld packages. blithely regular platelets integrate furiously. ironic, regular foxes are c
+    9939.4 | Supplier#000028113        | RUSSIA                    |   1728112 | Manufacturer#2            | HrnOoqKBep02Dvafwz9SHIzaJWlL             | 32-938-722-6528 | ideas. ruthlessly ironic accounts should are slyly special, regular pla
+    9939.3 | Supplier#000012086        | ROMANIA                   |    387082 | Manufacturer#3            | 1J3KiLGCU3                               | 29-275-848-9101 | ilent, special deposits. ironic requests boost furiously aroun
+    9939.3 | Supplier#000012086        | ROMANIA                   |   1012085 | Manufacturer#2            | 1J3KiLGCU3                               | 29-275-848-9101 | ilent, special deposits. ironic requests boost furiously aroun
+   9938.69 | Supplier#000048337        | RUSSIA                    |   1098316 | Manufacturer#3            | tXGAix6fSBfdQuOu4BBAQDsnVsCzxzFK8g1      | 32-566-156-5537 | ular pinto beans. slyly express theodolites sleep blithely
+   9936.22 | Supplier#000005250        | UNITED KINGDOM            |    705249 | Manufacturer#1            | B3rqp0xbSEim4Mpy2RH J                    | 33-320-228-2957 | etect about the furiously final accounts. slyly ironic pinto beans sleep inside the furiously
+   9934.88 | Supplier#000096830        | FRANCE                    |    746815 | Manufacturer#2            | Kr0JO9SLORE9w jyf0SmllIw6z4TwSWMM qbLG   | 16-418-502-3708 | theodolites sublate. quickly unusual theodolites according to the regular, ironic
+   9931.65 | Supplier#000087957        | RUSSIA                    |    837940 | Manufacturer#5            | NGnaqR9EhpuPmeDdZEaiUEckHnfc7HWP         | 32-223-673-7656 | t courts wake slyly bold accounts. bold packag
+   9928.22 | Supplier#000070571        | UNITED KINGDOM            |   1220546 | Manufacturer#2            | OVjfZbwOSBSM2R84JKjDyDBopwE              | 33-866-757-8338 | . even requests haggle special requests. asymptotes ha
+   9924.62 | Supplier#000021178        | UNITED KINGDOM            |    596172 | Manufacturer#1            | k7rdmaXpbvtv19HXfFBQXXXwW4  BaUDTbn      | 33-236-914-3641 | lithely express theodolites. carefully express platelets affix furiously. iron
+   9922.43 | Supplier#000090640        | FRANCE                    |     15639 | Manufacturer#4            | INXZEYm ei                               | 16-317-260-4538 | sleep furiously atop the pending deposits. quickly final pains detect
+   9922.43 | Supplier#000090640        | FRANCE                    |   1065629 | Manufacturer#2            | INXZEYm ei                               | 16-317-260-4538 | sleep furiously atop the pending deposits. quickly final pains detect
+   9920.38 | Supplier#000070357        | FRANCE                    |    145355 | Manufacturer#1            | vpT4fePDRawrCoiWiAqZqY9TRQwq             | 16-334-168-9229 | ly final platelets cajole across the quickly qu
+   9918.91 | Supplier#000077117        | ROMANIA                   |   1002086 | Manufacturer#1            | GWhCCTzamXl                              | 29-878-358-3293 | final, pending asymptotes! blit
+   9914.72 | Supplier#000048659        | FRANCE                    |   1673610 | Manufacturer#3            | RrECJgueNIpmERw2XO Jvdp35FbwhZ           | 16-791-327-8402 | dependencies will wake slyly above the special deposits. express, express ide
+    9909.8 | Supplier#000020484        | RUSSIA                    |   1220483 | Manufacturer#4            | AtzwvBpE0u81YSW7gLTy                     | 32-572-793-3048 | the packages. blithely final de
+   9904.98 | Supplier#000019587        | GERMANY                   |   1444544 | Manufacturer#3            | Trnh4BknxHUruOIqLIYDBc2WBq               | 17-728-693-9389 | foxes. fluffily even tithes are carefully along the blithely express foxes. ironic foxes ca
+   9904.22 | Supplier#000029749        | UNITED KINGDOM            |   1504733 | Manufacturer#3            | b3ld3,0Nixqxvcbd3VEY86vb84EY             | 33-887-460-2923 | ress multipliers wake finally after the blithely final a
+    9900.5 | Supplier#000059434        | UNITED KINGDOM            |   1909395 | Manufacturer#1            | j8s26GZ4EF6vzq9oIRsspI2zt Usst           | 33-696-691-9604 |  regular foxes throughout the p
+   9900.46 | Supplier#000027015        | GERMANY                   |    152011 | Manufacturer#4            | pQlVTIESWw                               | 17-741-493-5280 | lent, ironic dolphins. slyly
+   9894.72 | Supplier#000061800        | ROMANIA                   |   1436785 | Manufacturer#5            | PRopNNQxeELJMoBIaGGPdo7lUgL 4oy Sfp      | 29-544-557-3280 | al instructions haggle furiously a
+   9892.21 | Supplier#000016589        | FRANCE                    |    241582 | Manufacturer#1            | MnSKC7j1RaeB,                            | 16-639-809-1366 | equests. carefully regular courts alongside of the fluf
+   9890.63 | Supplier#000082319        | GERMANY                   |    157317 | Manufacturer#5            | fbfIEqyeHBWA                             | 17-591-858-7431 |  slyly express requests. bold excuses haggle carefully. special ideas sleep 
+   9886.61 | Supplier#000037924        | UNITED KINGDOM            |    812915 | Manufacturer#3            | 1d4VfErNApctSuiXs                        | 33-851-485-1666 | gular, even dependencies. fluffily even foxes among the ironic accounts se
+   9884.06 | Supplier#000038668        | RUSSIA                    |    338667 | Manufacturer#2            | RKrEGa LQdcnA wR                         | 32-365-122-4074 | s haggle. furiously even ac
+   9880.72 | Supplier#000000896        | GERMANY                   |    800895 | Manufacturer#5            | yvNZycuQYm9d9A8v1m                       | 17-790-100-9143 |  regular deposits. carefully unusual accounts haggle ironic,
+   9876.89 | Supplier#000092565        | FRANCE                    |   1392564 | Manufacturer#5            | F65cSyImg5V,aX99BgHoz                    | 16-175-402-8164 |  packages use stealthily quickly regular instructions. blithely iron
+   9875.72 | Supplier#000073719        | FRANCE                    |    973718 | Manufacturer#2            | PiOw jtgZx,FXj iaUxNmxVEyVo77IjYqACcjk   | 16-823-901-3878 |  wake slyly about the ironic, ironic accounts. fluffily express 
+   9871.22 | Supplier#000006373        | GERMANY                   |   1181361 | Manufacturer#3            | J8fcXWsTqM                               | 17-813-485-8637 | etect blithely bold asymptotes. fluffily ironic platelets wake furiously; blit
+   9869.98 | Supplier#000081446        | FRANCE                    |   1956426 | Manufacturer#2            | xQnnVgu PfVo                             | 16-912-320-8438 | nal dependencies. pinto beans 
+   9868.88 | Supplier#000015227        | UNITED KINGDOM            |    915226 | Manufacturer#4            | UaJadtmHyVbbVHH8ebx5BrB9bK               | 33-531-348-4608 | nos. deposits nag. even, pending pinto beans haggle carefully unusual
+   9860.24 | Supplier#000029047        | FRANCE                    |   1579016 | Manufacturer#2            | 9YOTHZrVjWbI6nF1P                        | 16-229-827-8211 | kly. fluffily special theodolites along the busily 
+   9859.94 | Supplier#000038883        | ROMANIA                   |    638882 | Manufacturer#5            | tVo57VwshoRd4nd1Tdk PlL7UAXKCzlucwrWhK   | 29-752-457-3142 |  are. pinto beans x-ray by the slyly pending accoun
+   9857.51 | Supplier#000020797        | UNITED KINGDOM            |    595791 | Manufacturer#5            | Eq4UtIWHRQChNhLxTI                       | 33-667-827-2552 | eaves along the final, ironic deposits sublate about the quickly even 
+   9857.23 | Supplier#000040765        | GERMANY                   |    465752 | Manufacturer#3            | V52U KaskYRO4M2iH8BAPPzP1Q0ZGh,          | 17-255-667-7322 |  asymptotes against the bold packages boost blithely after the furiously express theodolites. sly
+   9857.23 | Supplier#000040765        | GERMANY                   |   1640764 | Manufacturer#3            | V52U KaskYRO4M2iH8BAPPzP1Q0ZGh,          | 17-255-667-7322 |  asymptotes against the bold packages boost blithely after the furiously express theodolites. sly
+   9856.43 | Supplier#000045738        | UNITED KINGDOM            |     95737 | Manufacturer#3            | qd7jaGTfaxX Fhamq84AagYXv3IqU0oIEjBC     | 33-394-523-3413 | es. fluffy deposits run caref
+   9852.59 | Supplier#000053776        | GERMANY                   |    678757 | Manufacturer#2            | V89yhJkZdtoMKE0Gjd0jBxABrcP              | 17-224-270-7303 | thely. carefully pending pinto beans cajole even accounts: blithel
+   9851.69 | Supplier#000038614        | FRANCE                    |    938613 | Manufacturer#5            | JcRDnfM4MC8Aqr8TA9xnNZQt2WV              | 16-357-637-7425 | y above the carefully express accounts. blithely even requests boost blithe
+    9850.9 | Supplier#000066053        | UNITED KINGDOM            |   1816016 | Manufacturer#4            | C,IWe7RpG WHdg2ZS                        | 33-766-582-8615 |  final, ironic requests cajole fluffily blithely reg
+   9839.67 | Supplier#000027470        | FRANCE                    |   1027469 | Manufacturer#2            | OWoFtl4XUBkOjdUhW                        | 16-455-356-2340 | ng packages are across the s
+   9838.79 | Supplier#000097818        | GERMANY                   |   1272805 | Manufacturer#1            | SCgrAIygFpu56u                           | 17-219-386-4837 |  slyly gifts. carefully final
+   9835.82 | Supplier#000040971        | RUSSIA                    |    140970 | Manufacturer#4            | V6vyMHbenn9UrdjBeUnIYRBQt                | 32-556-376-5134 | rding to the final, express request
+   9835.82 | Supplier#000040971        | RUSSIA                    |   1065940 | Manufacturer#2            | V6vyMHbenn9UrdjBeUnIYRBQt                | 32-556-376-5134 | rding to the final, express request
+   9835.16 | Supplier#000029961        | UNITED KINGDOM            |    354951 | Manufacturer#3            | gHq2sGgnKZl                              | 33-411-329-7177 | s. ideas boost around the carefully 
+   9835.16 | Supplier#000029961        | UNITED KINGDOM            |   1779926 | Manufacturer#5            | gHq2sGgnKZl                              | 33-411-329-7177 | s. ideas boost around the carefully 
+   9831.95 | Supplier#000057380        | ROMANIA                   |   1532364 | Manufacturer#3            | OISAlNhoacPOx                            | 29-915-260-4712 | ans wake special, special ideas. r
+   9827.32 | Supplier#000049103        | GERMANY                   |   1549102 | Manufacturer#5            | eZH4P4R6ZZlivSCjn5Usg                    | 17-370-896-2952 | slyly ironic foxes nag quickly slyly regular excuses. quickly
+   9827.32 | Supplier#000049103        | GERMANY                   |   1849102 | Manufacturer#4            | eZH4P4R6ZZlivSCjn5Usg                    | 17-370-896-2952 | slyly ironic foxes nag quickly slyly regular excuses. quickly
+    9822.3 | Supplier#000004485        | UNITED KINGDOM            |   1879466 | Manufacturer#2            | 62reHN90t,nD8jpktr,KmeJ3VeCTvChr         | 33-319-815-4381 | l escapades sleep carefully among the regular, final packages. slyly regular requests nag fu
+    9822.2 | Supplier#000058026        | UNITED KINGDOM            |    158025 | Manufacturer#5            | NaRac9B7nPkFJbzMG                        | 33-146-675-5399 | tions wake-- blithely ironic courts use. requests are furiously after the carefully special excuses
+   9821.63 | Supplier#000026099        | ROMANIA                   |    101097 | Manufacturer#1            | YxBJB2zr8o                               | 29-269-565-8215 | s after the carefully regular dependencies are even, sly patterns. furiously bo
+   9818.98 | Supplier#000060094        | GERMANY                   |    760093 | Manufacturer#1            | P8CrJmDT2lihE                            | 17-293-298-6268 | nt ideas along the quickly express theodolites doze slyly quickly careful pinto
+   9815.76 | Supplier#000022678        | FRANCE                    |    972659 | Manufacturer#2            | Oe9b1cNaAljm0OjBUrwS                     | 16-167-391-9023 | ve the idly regular ideas detect quickly furiously final pack
+   9815.76 | Supplier#000022678        | FRANCE                    |   1472649 | Manufacturer#2            | Oe9b1cNaAljm0OjBUrwS                     | 16-167-391-9023 | ve the idly regular ideas detect quickly furiously final pack
+    9813.6 | Supplier#000055776        | FRANCE                    |   1530760 | Manufacturer#5            | SS3ciyJ0dtm                              | 16-374-101-6442 | ts. fluffily regular deposits try to wake along the busy orbit
+   9813.22 | Supplier#000098662        | GERMANY                   |   1023631 | Manufacturer#3            | C2Xnz3lgoz                               | 17-399-656-1830 | sual pinto beans haggle quietly unusual packages. even ideas are around 
+   9811.08 | Supplier#000060483        | ROMANIA                   |   1735465 | Manufacturer#5            | kM6 Hkj,IYx DaTK2b L, V                  | 29-414-907-1899 | ven, even theodolites cajole after the blithely even excuses. quickl
+   9809.61 | Supplier#000021925        | GERMANY                   |   1021924 | Manufacturer#3            | nWbOQ60h1lvfJn,jhyLJeMGSbiA67            | 17-828-976-5749 |  furiously above the blithely b
+   9808.75 | Supplier#000007872        | FRANCE                    |   1157849 | Manufacturer#3            | wNlvR0u0jwFd3wvWdRGpnN0G9g3ArZyrTuX      | 16-117-200-6865 | inst the express, bold ideas. furiously final deposits haggle carefully around the sl
+   9806.15 | Supplier#000068269        | FRANCE                    |   1518238 | Manufacturer#5            | 1qnj7,4ICJ                               | 16-171-869-7268 |  above the furiously ironic pinto beans. express pinto beans slee
+   9804.85 | Supplier#000048437        | ROMANIA                   |   1023426 | Manufacturer#3            | hlJANS7iFg6oaYf6IWK6ddYCl,UkVKpJ68Z6     | 29-657-201-8948 | xes haggle closely carefully pending waters. even, special deposits hag
+   9797.98 | Supplier#000012862        | ROMANIA                   |   1112861 | Manufacturer#4            | ernH0nPDW2r3asW7                         | 29-269-207-4912 | er the blithely special accounts. quickly express account
+   9795.76 | Supplier#000005451        | UNITED KINGDOM            |   1330411 | Manufacturer#2            | JECYQtqXS8i13qrBf2flrHbmvuzYoVucGcMWW    | 33-215-882-1837 | jole carefully among the regular instruc
+   9795.66 | Supplier#000074142        | GERMANY                   |    124139 | Manufacturer#2            | d5oADAAWmKqQ8VJ                          | 17-834-721-5091 | ial pinto beans among the slyly unusual ideas are unusual requests. furiously regu
+   9793.99 | Supplier#000020982        | ROMANIA                   |    945954 | Manufacturer#3            | sJZSIUlkU7lQXctqmnWO5IXLF                | 29-164-384-7339 | ts are along the furiously regular deposits. reg
+   9793.99 | Supplier#000020982        | ROMANIA                   |   1295969 | Manufacturer#3            | sJZSIUlkU7lQXctqmnWO5IXLF                | 29-164-384-7339 | ts are along the furiously regular deposits. reg
+   9793.24 | Supplier#000029855        | ROMANIA                   |    529854 | Manufacturer#2            | sFKrjE3L1r                               | 29-349-531-2713 | ly even packages. furiously express deposits nag fluffily daring deposits. slyly bold deposits c
+   9789.61 | Supplier#000034881        | GERMANY                   |   1509865 | Manufacturer#2            | Vc3Dnx0Mwm05YAR                          | 17-237-600-1480 | ependencies above the regular packages nag blithel
+   9788.73 | Supplier#000083261        | FRANCE                    |    408248 | Manufacturer#4            | 1eof4IF4xyXiEgrc,FcLV7SHf                | 16-653-115-5484 | to beans. quickly even dolphins are. requests sl
+   9788.34 | Supplier#000028695        | RUSSIA                    |   1653646 | Manufacturer#2            | 2xpqxulLyrwJk34enWS4Wwa6WVrbOfaR9        | 32-637-686-9685 | furiously even theodolites. quickly
+(100 rows)
+
+COMMIT;
+COMMIT

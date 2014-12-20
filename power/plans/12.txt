@@ -1,0 +1,48 @@
+BEGIN;
+BEGIN
+EXPLAIN
+select
+	l_shipmode,
+	sum(case
+		when o_orderpriority = '1-URGENT'
+			or o_orderpriority = '2-HIGH'
+			then 1
+		else 0
+	end) as high_line_count,
+	sum(case
+		when o_orderpriority <> '1-URGENT'
+			and o_orderpriority <> '2-HIGH'
+			then 1
+		else 0
+	end) as low_line_count
+from
+	orders,
+	lineitem
+where
+	o_orderkey = l_orderkey
+	and l_shipmode in ('TRUCK', 'RAIL')
+	and l_commitdate < l_receiptdate
+	and l_shipdate < l_commitdate
+	and l_receiptdate >= date '1996-01-01'
+	and l_receiptdate < date '1996-01-01' + interval '1 year'
+group by
+	l_shipmode
+order by
+	l_shipmode;
+                                                                                           QUERY PLAN                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Sort  (cost=980441.58..980441.59 rows=1 width=27)
+   Sort Key: lineitem.l_shipmode
+   ->  HashAggregate  (cost=980441.56..980441.57 rows=1 width=27)
+         Group Key: lineitem.l_shipmode
+         ->  Hash Join  (cost=590769.43..975401.16 rows=288023 width=27)
+               Hash Cond: (lineitem.l_orderkey = orders.o_orderkey)
+               ->  Index Scan using lineitem_l_orderkey_idx_part2 on lineitem  (cost=0.43..375631.44 rows=288023 width=15)
+                     Filter: ((l_shipmode = ANY ('{TRUCK,RAIL}'::bpchar[])) AND (l_receiptdate >= '1996-01-01'::date) AND (l_receiptdate < '1997-01-01 00:00:00'::timestamp without time zone))
+               ->  Hash  (cost=403269.00..403269.00 rows=15000000 width=20)
+                     ->  Seq Scan on orders  (cost=0.00..403269.00 rows=15000000 width=20)
+ Planning time: 1.837 ms
+(11 rows)
+
+COMMIT;
+COMMIT
